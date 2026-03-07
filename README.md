@@ -1,10 +1,10 @@
-# Kairo Email Service 📧
+# Kairo Email Service
 
 A robust, high-performance email delivery microservice built with **Node.js**, **Express**, and **Nodemailer**. Designed for seamless integration, security, and scalability.
 
 ---
 
-## 🚀 Key Features
+## Key Features
 
 - **Template System**: Rich HTML templates for:
   - Password Recovery
@@ -31,7 +31,7 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v18+)
@@ -46,7 +46,7 @@ npm install
 
 ---
 
-## ⚙️ Configuration
+## Configuration
 
 Create a `.env` file based on `.env.example`:
 
@@ -80,7 +80,7 @@ FRONTEND_URL=http://localhost:3000
 
 ---
 
-## 🏃 Running the Service
+## Running the Service
 
 ### Development Mode
 Runs with `nodemon` for automatic restarts and detailed colorized logs.
@@ -101,7 +101,7 @@ npm start
 
 ---
 
-## 📡 API Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
@@ -116,7 +116,7 @@ npm start
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 ├── src/
@@ -133,6 +133,6 @@ npm start
 
 ---
 
-## 🛡️ License
+## License
 Released under the [MIT License](LICENSE).
-Built with ❤️ by **Keiver-Dev**.
+Built with care by **Keiver-Dev**.
