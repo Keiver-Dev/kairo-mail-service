@@ -1,6 +1,6 @@
 {
   "name": "kairo-email-service",
-  "version": "0.1.2-beta",
+  "version": "0.1.3-beta",
   "description": "Email delivery microservice built with Node.js, Express, and Nodemailer.",
   "type": "module",
   "main": "src/server.js",
@@ -17,7 +17,7 @@
     "nodemailer",
     "express"
   ],
-  "author": "Kairo Studios",
+  "author": "Keiver-Dev",
   "license": "MIT",
   "jest": {
     "testEnvironment": "node",

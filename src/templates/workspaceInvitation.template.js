@@ -1,18 +1,16 @@
-import { baseTemplate } from './base.template.js';
-
 export const workspaceInvitationTemplate = ({ inviterName, workspaceName, acceptLink }) => {
   const subject = `Invitation to Workspace: ${workspaceName}`;
-  const headerColor = '#3B82F6';
+  const headerColor = '#3b82f6';
 
   const bodyContent = `
-    <p>Hi,</p>
+    <p>Hi there,</p>
     <p><span class="highlight">${inviterName}</span> has invited you to join the workspace <span class="highlight">${workspaceName}</span>.</p>
-    <p>We're excited to have you on the team!</p>
-    <div style="text-align: center;">
+    <p>We're excited to have you on the team! Collaborative work is just one click away.</p>
+    <div style="text-align: center; margin: 35px 0;">
       <a href="${acceptLink}" class="button">Accept Invitation</a>
     </div>
     <div class="info-box">
-      This invitation will expire in 7 days.
+      <strong>Note:</strong> This invitation will expire in 7 days.
     </div>
   `;
 

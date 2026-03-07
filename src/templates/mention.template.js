@@ -1,32 +1,21 @@
-import { baseTemplate } from './base.template.js';
-
-/**
- * Template for mentions in comments
- * @param {Object} params
- * @param {string} params.userName - Name of the user being mentioned
- * @param {string} params.commenterName - Name of the person who mentioned the user
- * @param {string} params.taskTitle - Title of the task where the mention occurred
- * @param {string} params.commentPreview - Preview text of the comment
- * @param {string} params.taskLink - Link to the task
- */
 export const mentionTemplate = ({ userName, commenterName, taskTitle, commentPreview, taskLink }) => {
   const subject = `${commenterName} mentioned you in: ${taskTitle}`;
-  const headerColor = '#8B5CF6'; // Violet
+  const headerColor = '#8b5cf6'; // Violet
   const headerTitle = 'New Mention';
 
   const bodyContent = `
-    <p>Hi ${userName},</p>
+    <p>Hi <span class="highlight">${userName}</span>,</p>
     <p><span class="highlight">${commenterName}</span> mentioned you in a comment on the task <span class="highlight">${taskTitle}</span>:</p>
     
-    <div style="background-color: #f9fafb; border-left: 4px solid #e5e7eb; padding: 15px; font-style: italic; color: #4b5563; margin: 20px 0;">
+    <div style="background-color: #f8fafc; border-left: 4px solid #8b5cf6; padding: 25px; border-radius: 12px; font-style: italic; color: #475569; margin: 30px 0; border: 1px solid #e2e8f0; border-left-width: 4px;">
       "${commentPreview}"
     </div>
     
-    <div style="text-align: center;">
+    <div style="text-align: center; margin: 35px 0;">
       <a href="${taskLink}" class="button">Reply to Comment</a>
     </div>
 
-    <p>Stay productive!</p>
+    <p style="text-align: center; color: #94a3b8; font-size: 14px;">Stay productive!</p>
   `;
 
   const html = baseTemplate({ headerColor, headerTitle, bodyContent });

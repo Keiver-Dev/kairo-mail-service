@@ -1,31 +1,22 @@
-import { baseTemplate } from './base.template.js';
-
-/**
- * Template for task deadline reminders
- * @param {Object} params
- * @param {string} params.userName - Name of the user
- * @param {string} params.taskTitle - Title of the task
- * @param {string} params.deadlineStr - Formatted deadline date string
- * @param {string} params.taskLink - Link to the task
- */
 export const deadlineReminderTemplate = ({ userName, taskTitle, deadlineStr, taskLink }) => {
   const subject = `Upcoming Deadline: ${taskTitle}`;
-  const headerColor = '#EF4444'; // Red
+  const headerColor = '#f43f5e'; // Rose/Red
   const headerTitle = 'Deadline Reminder';
 
   const bodyContent = `
-    <p>Hi ${userName},</p>
-    <p>This is a reminder that the task <span class="highlight">${taskTitle}</span> is approaching its deadline.</p>
+    <p>Hi <span class="highlight">${userName}</span>,</p>
+    <p>This is a friendly reminder that the task <span class="highlight">${taskTitle}</span> is approaching its deadline.</p>
     
-    <div class="info-box" style="border-left-color: #EF4444;">
-      <strong style="color: #EF4444;">Deadline:</strong> <span style="font-weight: 600;">${deadlineStr}</span>
+    <div class="info-box" style="border-radius: 12px; border: 1px solid #fecdd3; background-color: #fff1f2;">
+      <p style="margin: 0; color: #e11d48; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 0.025em;">Deadline</p>
+      <p style="margin: 5px 0 0 0; font-size: 20px; font-weight: 600; color: #1e293b;">${deadlineStr}</p>
     </div>
     
-    <div style="text-align: center;">
-      <a href="${taskLink}" class="button" style="background-color: #EF4444;">View Task Details</a>
+    <div style="text-align: center; margin: 35px 0;">
+      <a href="${taskLink}" class="button" style="background-color: #f43f5e;">View Task Details</a>
     </div>
 
-    <p>Don't let it slip!</p>
+    <p style="text-align: center; color: #94a3b8; font-size: 14px;">Don't let it slip!</p>
   `;
 
   const html = baseTemplate({ headerColor, headerTitle, bodyContent });
