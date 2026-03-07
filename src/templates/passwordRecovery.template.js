@@ -1,25 +1,25 @@
-import { baseTemplate } from './base.template.js';
-
 export const passwordRecoveryTemplate = ({ userName, recoveryLink }) => {
-  const subject = 'Password recovery - Kairo Studios';
-  const headerColor = '#4F46E5';
+  const subject = 'Reset your password - Keiver-Dev';
+  const headerColor = '#4f46e5';
   
   const bodyContent = `
     <p>Hi <span class="highlight">${userName}</span>,</p>
-    <p>You have requested to reset your password. Click the following button to continue with the process:</p>
-    <div style="text-align: center;">
+    <p>We received a request to reset the password for your account. No worries, it happens! Click the button below to choose a new one:</p>
+    <div style="text-align: center; margin: 35px 0;">
       <a href="${recoveryLink}" class="button">Reset Password</a>
     </div>
     <div class="info-box">
-      <strong>Important:</strong> This link will expire in 1 hour. If you did not request this change, you can safely ignore this email.
+      <strong>Important:</strong> This secure link will expire in 1 hour. If you did not request this change, please ignore this email or contact support if you have concerns.
     </div>
-    <p>If the button doesn't work, copy and paste the following link into your browser:</p>
-    <p style="word-break: break-all; font-size: 12px; color: #6b7280;">${recoveryLink}</p>
+    <p style="font-size: 13px; color: #94a3b8; text-align: center;">
+      If the button above doesn't work, copy and paste this link into your browser:<br>
+      <span style="word-break: break-all; color: #6366f1;">${recoveryLink}</span>
+    </p>
   `;
 
   return {
     subject,
-    html: baseTemplate({ headerColor, headerTitle: 'Recover Password', bodyContent }),
-    text: `Hi ${userName}, you have requested to reset your password. Use the following link: ${recoveryLink}. Expires in 1 hour.`
+    html: baseTemplate({ headerColor, headerTitle: 'Password Recovery', bodyContent }),
+    text: `Hi ${userName}, reset your password using this link: ${recoveryLink}. Valid for 1 hour.`
   };
 };
