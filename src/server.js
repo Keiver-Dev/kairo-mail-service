@@ -10,6 +10,11 @@ const PORT = process.env.PORT || 3001;
 
 const startServer = async () => {
   try {
+    // 0. Ensure production mode by default for security
+    if (!process.env.NODE_ENV) {
+      process.env.NODE_ENV = 'production';
+    }
+
     // 1. Validate environment variables
     validateEnv();
 
