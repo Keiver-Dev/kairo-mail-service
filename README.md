@@ -39,8 +39,8 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
 
 ### Clone and Install
 ```bash
-git clone https://github.com/Keiver-Dev/Kairo-Email-Service.git
-cd Kairo-Email-Service
+git clone https://github.com/Keiver-Dev/kairo-mail-service.git
+cd kairo-mail-service
 npm install
 ```
 
