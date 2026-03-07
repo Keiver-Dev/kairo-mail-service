@@ -1,0 +1,7 @@
+node_modules/
+email-microservice-checklist.md
+.env
+.env.production
+logs/
+coverage/
+.DS_Store

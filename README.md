@@ -135,4 +135,4 @@ npm start
 
 ## 🛡️ License
 Released under the [MIT License](LICENSE).
-Built with ❤️ by **Kairo Studios**.
+Built with ❤️ by **Keiver-Dev**.
