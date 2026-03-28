@@ -57,17 +57,14 @@ export const sendEmail = async ({ to, subject, html, text, type = 'generic' }) =
     logger.info(`Email (${type}) sent to ${sanitizeEmail(to)}. ID: ${info.messageId}`);
     if (previewUrl) logger.info(`Preview URL: ${previewUrl}`);
 
-    // Placeholder for DB Logging (Phase 8 integration)
-    try {
-      if (pool) {
-        // This is safe to run as it's fire-and-forget in terms of the API response
-        pool.query(
-          'INSERT INTO email_logs (recipient, subject, type, message_id, status) VALUES ($1, $2, $3, $4, $5)',
-          [sanitizeEmail(to), subject, type, info.messageId, 'sent']
-        ).catch(() => { /* Table might not exist yet, ignore silenty */ });
-      }
-    } catch (dbErr) {
-      // Just a placeholder, don't break the email flow
+    // Log to Database if connected
+    if (pool) {
+      pool.query(
+        'INSERT INTO email_logs (recipient, subject, type, message_id, status) VALUES ($1, $2, $3, $4, $5)',
+        [sanitizeEmail(to), subject, type, info.messageId, 'sent']
+      ).catch((err) => {
+        logger.warn(`Database logging failed for email to ${sanitizeEmail(to)}: ${err.message}`);
+      });
     }
 
     return { 
