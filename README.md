@@ -1,8 +1,4 @@
-# Letterbox Email Service
-
-![Node Version](https://img.shields.io/badge/node-%3E%3D18-green)
-![License](https://img.shields.io/badge/license-MIT-blue)
-![Status](https://img.shields.io/badge/status-beta-orange)
+# Letterbox
 
 A robust, high-performance email delivery microservice built with **Node.js**, **Express**, and **Nodemailer**. Designed for seamless integration, security, and scalability.
 
@@ -19,7 +15,7 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
   - PR Merged Announcements
   - Deadline Reminders
 - **Database Integration**: Automatic PostgreSQL migrations for audit logs.
-- **Security**: 
+- **Security**:
   - API Key based authentication (`X-Api-Key`).
   - Request validation via `express-validator`.
   - Secure environment configuration.
@@ -28,7 +24,7 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
   - Comprehensive integration test suite with **Jest** and **Supertest**.
   - ESLint configuration for code quality.
   - ESM (EcmaScript Modules) support.
-- **Reliability**: 
+- **Reliability**:
   - Graceful connection handling for DB and SMTP.
   - Health checks (`/health`) with detailed component status.
   - Error middleware for centralized stability.
@@ -62,7 +58,7 @@ This service uses PostgreSQL to store audit logs of sent emails.
 ### 2. Create Database
 Using `psql` or a tool like [pgAdmin](https://www.pgadmin.org/):
 ```sql
-CREATE DATABASE letterbox_email;
+CREATE DATABASE letterbox;
 ```
 
 ### 3. Migrations
@@ -87,8 +83,8 @@ INTERNAL_API_KEY=your_secure_32_char_key
 # Database
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=letterbox_email
-DB_USER=postgres  # Default for most PostgreSQL installations
+DB_NAME=letterbox
+DB_USER=postgres
 DB_PASSWORD=your_password
 
 # ─── Email ───────────────────────────────────────
@@ -97,7 +93,7 @@ DB_PASSWORD=your_password
 EMAIL_TEST_MODE=true
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_gmail_app_password
-EMAIL_FROM_NAME=Mail Service
+EMAIL_FROM_NAME=Letterbox
 
 # ─── Environment ──────────────────────────────────
 # Values: development, production, test
@@ -112,7 +108,7 @@ FRONTEND_URL=http://localhost:3000
 To use Gmail as your provider:
 1. Enable **2FA** on your Google Account.
 2. Go to [App Passwords](https://myaccount.google.com/apppasswords).
-3. Create a new app password (e.g., "Letterbox Email").
+3. Create a new app password (e.g., "Letterbox").
 4. Copy the 16-character code and use it as `EMAIL_PASS`.
 
 ### Alternative Providers
@@ -134,7 +130,7 @@ The easiest way to run the service is using Docker Compose, which spins up both 
 docker-compose up -d
 
 # 2. Check logs
-docker-compose logs -f mail-service
+docker-compose logs -f letterbox
 ```
 
 The service will be accessible at `http://localhost:3001`.
@@ -234,11 +230,11 @@ curl -X POST http://localhost:3001/api/email/verify-email \
 - Ensure this matches the `INTERNAL_API_KEY` defined in your `.env`.
 
 **4. Migrations Not Running**
-- Check the console logs for `[ERROR] Migration runner failed`. 
+- Check the console logs for `[ERROR] Migration runner failed`.
 - Ensure the database user has permissions to create tables.
 
 ---
 
 ## License
 Released under the [MIT License](LICENSE).
-Built with care by **Keiver-Dev**.
+Built with care by **[Keiver-Dev](https://github.com/Keiver-Dev)**.
