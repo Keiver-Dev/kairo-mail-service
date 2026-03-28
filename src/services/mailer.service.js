@@ -13,6 +13,22 @@ import { mentionTemplate } from '../templates/mention.template.js';
 import { deadlineReminderTemplate } from '../templates/deadlineReminder.template.js';
 import { prMergedTemplate } from '../templates/prMerged.template.js';
 
+// --- New Templates ---
+import { newDeviceLoginTemplate } from '../templates/newDeviceLogin.template.js';
+import { twoFactorCodeTemplate } from '../templates/twoFactorCode.template.js';
+import { passwordChangedTemplate } from '../templates/passwordChanged.template.js';
+import { accountDeletedTemplate } from '../templates/accountDeleted.template.js';
+import { paymentSuccessTemplate } from '../templates/paymentSuccess.template.js';
+import { paymentFailedTemplate } from '../templates/paymentFailed.template.js';
+import { trialEndingTemplate } from '../templates/trialEnding.template.js';
+import { subscriptionCancelledTemplate } from '../templates/subscriptionCancelled.template.js';
+import { subscriptionRenewedTemplate } from '../templates/subscriptionRenewed.template.js';
+import { welcomeTemplate } from '../templates/welcome.template.js';
+import { inactivityNudgeTemplate } from '../templates/inactivityNudge.template.js';
+import { digestTemplate } from '../templates/digest.template.js';
+import { maintenanceScheduledTemplate } from '../templates/maintenanceScheduled.template.js';
+import { apiKeyEventTemplate } from '../templates/apiKeyEvent.template.js';
+
 /**
  * Generic service to send emails and log the result
  * @param {Object} params
@@ -229,4 +245,158 @@ export const sendPRMerged = async (recipient, userName, prData) => {
     prUrl 
   });
   return sendEmail({ to: recipient, type: 'pr_merged', ...payload });
+};
+
+/**
+ * Sends a new device login notification
+ */
+export const sendNewDeviceLogin = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.device) {
+    throw new Error('Missing required parameters for new device login email');
+  }
+  const payload = newDeviceLoginTemplate(data);
+  return sendEmail({ to: recipient, type: 'new_device_login', ...payload });
+};
+
+/**
+ * Sends a 2FA code
+ */
+export const sendTwoFactorCode = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.code) {
+    throw new Error('Missing required parameters for 2FA code email');
+  }
+  const payload = twoFactorCodeTemplate(data);
+  return sendEmail({ to: recipient, type: 'two_factor_code', ...payload });
+};
+
+/**
+ * Sends a password changed confirmation
+ */
+export const sendPasswordChanged = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.changedAt) {
+    throw new Error('Missing required parameters for password changed email');
+  }
+  const payload = passwordChangedTemplate(data);
+  return sendEmail({ to: recipient, type: 'password_changed', ...payload });
+};
+
+/**
+ * Sends an account deletion confirmation
+ */
+export const sendAccountDeleted = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.deletionDate) {
+    throw new Error('Missing required parameters for account deletion email');
+  }
+  const payload = accountDeletedTemplate(data);
+  return sendEmail({ to: recipient, type: 'account_deleted', ...payload });
+};
+
+/**
+ * Sends a payment success receipt
+ */
+export const sendPaymentSuccess = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.amount) {
+    throw new Error('Missing required parameters for payment success email');
+  }
+  const payload = paymentSuccessTemplate(data);
+  return sendEmail({ to: recipient, type: 'payment_success', ...payload });
+};
+
+/**
+ * Sends a payment failed notification
+ */
+export const sendPaymentFailed = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.amount) {
+    throw new Error('Missing required parameters for payment failed email');
+  }
+  const payload = paymentFailedTemplate(data);
+  return sendEmail({ to: recipient, type: 'payment_failed', ...payload });
+};
+
+/**
+ * Sends a trial ending soon notification
+ */
+export const sendTrialEnding = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.daysLeft) {
+    throw new Error('Missing required parameters for trial ending email');
+  }
+  const payload = trialEndingTemplate(data);
+  return sendEmail({ to: recipient, type: 'trial_ending', ...payload });
+};
+
+/**
+ * Sends a subscription cancelled confirmation
+ */
+export const sendSubscriptionCancelled = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.planName) {
+    throw new Error('Missing required parameters for subscription cancelled email');
+  }
+  const payload = subscriptionCancelledTemplate(data);
+  return sendEmail({ to: recipient, type: 'subscription_cancelled', ...payload });
+};
+
+/**
+ * Sends a subscription renewed confirmation
+ */
+export const sendSubscriptionRenewed = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.planName) {
+    throw new Error('Missing required parameters for subscription renewed email');
+  }
+  const payload = subscriptionRenewedTemplate(data);
+  return sendEmail({ to: recipient, type: 'subscription_renewed', ...payload });
+};
+
+/**
+ * Sends a welcome email
+ */
+export const sendWelcomeEmail = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.ctaLink) {
+    throw new Error('Missing required parameters for welcome email');
+  }
+  const payload = welcomeTemplate(data);
+  return sendEmail({ to: recipient, type: 'welcome', ...payload });
+};
+
+/**
+ * Sends an inactivity nudge
+ */
+export const sendInactivityNudge = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.lastLoginDate) {
+    throw new Error('Missing required parameters for inactivity nudge email');
+  }
+  const payload = inactivityNudgeTemplate(data);
+  return sendEmail({ to: recipient, type: 'inactivity_nudge', ...payload });
+};
+
+/**
+ * Sends a digest/summary email
+ */
+export const sendDigestEmail = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.items) {
+    throw new Error('Missing required parameters for digest email');
+  }
+  const payload = digestTemplate(data);
+  return sendEmail({ to: recipient, type: 'digest', ...payload });
+};
+
+/**
+ * Sends a maintenance scheduled notification
+ */
+export const sendMaintenanceScheduled = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.startTime) {
+    throw new Error('Missing required parameters for maintenance email');
+  }
+  const payload = maintenanceScheduledTemplate(data);
+  return sendEmail({ to: recipient, type: 'maintenance_scheduled', ...payload });
+};
+
+/**
+ * Sends an API key event notification
+ */
+export const sendAPIKeyEvent = async (recipient, data) => {
+  if (!recipient || !data?.userName || !data?.eventType) {
+    throw new Error('Missing required parameters for API key event email');
+  }
+  const payload = apiKeyEventTemplate(data);
+  return sendEmail({ to: recipient, type: 'api_key_event', ...payload });
 };

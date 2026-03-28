@@ -128,3 +128,143 @@ export const prMerged = async (req, res, next) => {
     next(error);
   }
 };
+
+export const newDeviceLogin = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendNewDeviceLogin(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const twoFactorCode = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendTwoFactorCode(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const passwordChanged = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendPasswordChanged(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const accountDeleted = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendAccountDeleted(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const paymentSuccess = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendPaymentSuccess(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const paymentFailed = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendPaymentFailed(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const trialEnding = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendTrialEnding(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const subscriptionCancelled = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendSubscriptionCancelled(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const subscriptionRenewed = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendSubscriptionRenewed(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const welcome = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendWelcomeEmail(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const inactivityNudge = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendInactivityNudge(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const digest = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendDigestEmail(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const maintenanceScheduled = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendMaintenanceScheduled(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const apiKeyEvent = async (req, res, next) => {
+  try {
+    const { email, ...data } = req.body;
+    const result = await mailerService.sendAPIKeyEvent(email, data);
+    res.status(202).json({ success: true, messageId: result.messageId, previewUrl: result.previewUrl });
+  } catch (error) {
+    next(error);
+  }
+};

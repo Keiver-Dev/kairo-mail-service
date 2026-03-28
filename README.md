@@ -39,8 +39,8 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
 
 ### Clone and Install
 ```bash
-git clone https://github.com/vlynk-studios/letterbox.git
-cd letterbox
+git clone https://github.com/Keiver-Dev/letterbox-mail-service.git
+cd letterbox-mail-service
 npm install
 ```
 
@@ -76,6 +76,8 @@ PORT=3001
 NODE_ENV=development
 
 # Security
+# Generate a secure 32-character key with: 
+# node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"
 INTERNAL_API_KEY=your_secure_32_char_key
 
 # Database
@@ -92,6 +94,10 @@ EMAIL_TEST_MODE=true
 EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_gmail_app_password
 EMAIL_FROM_NAME=Letterbox
+
+# ─── Environment ──────────────────────────────────
+# Values: development, production, test
+NODE_ENV=development
 
 # ─── Frontend ────────────────────────────────────
 # Base URL to build links inside emails
@@ -129,6 +135,15 @@ docker-compose logs -f letterbox
 
 The service will be accessible at `http://localhost:3001`.
 
+#### Docker Compose Overview
+The `docker-compose.yml` file includes:
+- **mail-service**: The Node.js microservice.
+- **db**: A PostgreSQL 15 instance.
+- **Volumes**: Persistent storage for the database in `postgres_data`.
+
+> [!TIP]
+> You can customize the ports and credentials directly in the `docker-compose.yml` or via environment variables.
+
 ---
 
 ## Running the Service
@@ -162,6 +177,19 @@ npm start
 | `POST` | `/api/email/workspace-invitation` | Invite users to workspaces |
 | `POST` | `/api/email/task-assignment` | Notify task assignments |
 | `POST` | `/api/email/mention` | Notify user mentions |
+
+### Quick Example (Verification Code)
+
+```bash
+curl -X POST http://localhost:3001/api/email/verify-email \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your_secure_32_char_key" \
+  -d '{
+    "to": "user@example.com",
+    "code": "123456",
+    "userName": "Keiver"
+  }'
+```
 
 *For full details on payloads, see the [Endpoint Documentation](./docs/ENDPOINTS.md).*
 

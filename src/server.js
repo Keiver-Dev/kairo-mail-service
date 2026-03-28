@@ -30,7 +30,7 @@ const startServer = async () => {
 
     // 4. Start server
     const server = app.listen(PORT, () => {
-      logger.info(pc.green(`Kairo Email Service running in ${pc.bold(process.env.NODE_ENV)} mode`));
+      logger.info(pc.green(`Letterbox Email Service running in ${pc.bold(process.env.NODE_ENV)} mode`));
       logger.info(pc.cyan(`Server accessible at ${pc.underline(`http://localhost:${PORT}`)}`));
     });
 

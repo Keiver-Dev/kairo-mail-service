@@ -12,6 +12,20 @@ jest.unstable_mockModule('../../src/services/mailer.service.js', () => ({
   sendMentionEmail: jest.fn(),
   sendDeadlineReminder: jest.fn(),
   sendPRMerged: jest.fn(),
+  sendNewDeviceLogin: jest.fn(),
+  sendTwoFactorCode: jest.fn(),
+  sendPasswordChanged: jest.fn(),
+  sendAccountDeleted: jest.fn(),
+  sendPaymentSuccess: jest.fn(),
+  sendPaymentFailed: jest.fn(),
+  sendTrialEnding: jest.fn(),
+  sendSubscriptionCancelled: jest.fn(),
+  sendSubscriptionRenewed: jest.fn(),
+  sendWelcomeEmail: jest.fn(),
+  sendInactivityNudge: jest.fn(),
+  sendDigestEmail: jest.fn(),
+  sendMaintenanceScheduled: jest.fn(),
+  sendAPIKeyEvent: jest.fn(),
   sendEmail: jest.fn(), // Generic
 }));
 
@@ -125,6 +139,60 @@ describe('Email Endpoints Integration Tests', () => {
         });
 
       expect(response.status).toBe(202);
+    });
+  });
+
+  describe('New Auth & Security Endpoints', () => {
+    it('POST /new-device-login should return 202', async () => {
+      mailerService.sendNewDeviceLogin.mockResolvedValue({ success: true, messageId: 'm1' });
+      const res = await request(app).post('/api/email/new-device-login').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', device: 'D', location: 'L', loginTime: 'T', blockLink: 'http://b.com'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('POST /two-factor-code should return 202', async () => {
+      mailerService.sendTwoFactorCode.mockResolvedValue({ success: true, messageId: 'm2' });
+      const res = await request(app).post('/api/email/two-factor-code').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', code: '123456'
+      });
+      expect(res.status).toBe(202);
+    });
+  });
+
+  describe('New Billing Endpoints', () => {
+    it('POST /payment-success should return 202', async () => {
+      mailerService.sendPaymentSuccess.mockResolvedValue({ success: true, messageId: 'm3' });
+      const res = await request(app).post('/api/email/payment-success').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', amount: '1', plan: 'P', invoiceLink: 'http://i.com'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('POST /payment-failed should return 202', async () => {
+      mailerService.sendPaymentFailed.mockResolvedValue({ success: true, messageId: 'm4' });
+      const res = await request(app).post('/api/email/payment-failed').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', amount: '1', updatePaymentLink: 'http://u.com'
+      });
+      expect(res.status).toBe(202);
+    });
+  });
+
+  describe('New Onboarding & System Endpoints', () => {
+    it('POST /welcome should return 202', async () => {
+      mailerService.sendWelcomeEmail.mockResolvedValue({ success: true, messageId: 'm5' });
+      const res = await request(app).post('/api/email/welcome').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', ctaLabel: 'G', ctaLink: 'http://c.com'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('POST /api-key-event should return 202', async () => {
+      mailerService.sendAPIKeyEvent.mockResolvedValue({ success: true, messageId: 'm6' });
+      const res = await request(app).post('/api/email/api-key-event').set('X-Api-Key', API_KEY).send({
+        email: 't@e.com', userName: 'K', eventType: 'generated', keyHint: '1', revokeLink: 'http://r.com'
+      });
+      expect(res.status).toBe(202);
     });
   });
 

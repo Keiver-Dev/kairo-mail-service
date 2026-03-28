@@ -134,7 +134,7 @@ Notifies a task owner that a related Pull Request has been merged.
     "prTitle": "Feat: Add multi-factor authentication",
     "taskTitle": "User security revamp",
     "taskId": "TASK-105",
-    "prUrl": "https://github.com/Kairo-Studios/repo/pull/1"
+    "prUrl": "https://github.com/Letterbox-Studios/repo/pull/1"
   }
 }
 ```
