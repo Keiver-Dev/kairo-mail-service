@@ -4,6 +4,22 @@ All notable changes to the **Letterbox Email Service** will be documented in thi
 
 ---
 
+## [0.1.4-beta] - 2026-03-28
+
+### Added
+- **Full Test Coverage**: Expanded the integration suite to cover all 23 email templates. Total tests across the project: 40 (all passing).
+- **Setup Automation**: Added a Makefile and setup.sh for one-command project initialization.
+- **Improved Security**: Transitioned to endpoint-specific rate limiting (globalLimiter and emailApiLimiter) to better protect sensitive routes.
+
+### Changed
+- **Database Persistence**: Finalized the database logging mechanism in mailer.service.js, replacing placeholders with robust, non-blocking logic and infrastructure warnings.
+- **Emoji-Free Documentation**: Standardized the aesthetic and clarity of scripts and README by removing emojis.
+
+### Fixed
+- **History Correction**: Corrected branding references in previous changelog entries to move toward the Letterbox brand.
+
+---
+
 ## [0.1.3-beta] - 2026-03-07
 ### Changed
 - **Branding Update**: Migrated project branding from **Keiver-Dev** to **Letterbox**.
