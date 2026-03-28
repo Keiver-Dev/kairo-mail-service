@@ -196,6 +196,241 @@ describe('Email Endpoints Integration Tests', () => {
     });
   });
 
+  describe('POST /api/email/workspace-invitation', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendWorkspaceInvitation.mockResolvedValue({ success: true, messageId: 'msg-wi' });
+      const res = await request(app).post('/api/email/workspace-invitation').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', workspaceName: 'Acme', inviterName: 'Jane', token: 'invite-tok'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if token is missing', async () => {
+      const res = await request(app).post('/api/email/workspace-invitation').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', workspaceName: 'Acme', inviterName: 'Jane'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/task-assignment', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendTaskAssignment.mockResolvedValue({ success: true, messageId: 'msg-ta' });
+      const res = await request(app).post('/api/email/task-assignment').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        assignerName: 'Sarah',
+        taskData: { title: 'Fix bug', workspaceName: 'Acme', id: 'T-42' }
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if taskData.id is missing', async () => {
+      const res = await request(app).post('/api/email/task-assignment').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        assignerName: 'Sarah',
+        taskData: { title: 'Fix bug', workspaceName: 'Acme' }
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/space-invitation', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendSpaceInvitation.mockResolvedValue({ success: true, messageId: 'msg-si' });
+      const res = await request(app).post('/api/email/space-invitation').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', spaceName: 'Design', inviterName: 'Jane', token: 'space-tok'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if spaceName is missing', async () => {
+      const res = await request(app).post('/api/email/space-invitation').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', inviterName: 'Jane', token: 'space-tok'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/deadline-reminder', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendDeadlineReminder.mockResolvedValue({ success: true, messageId: 'msg-dr' });
+      const res = await request(app).post('/api/email/deadline-reminder').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        taskData: { title: 'Ship v1', deadline: '2026-04-01', id: 'T-10' }
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if taskData.deadline is missing', async () => {
+      const res = await request(app).post('/api/email/deadline-reminder').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        taskData: { title: 'Ship v1', id: 'T-10' }
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/pr-merged', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendPRMerged.mockResolvedValue({ success: true, messageId: 'msg-pr' });
+      const res = await request(app).post('/api/email/pr-merged').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        prData: { prTitle: 'feat: auth', taskTitle: 'Auth module', taskId: 'T-5', prUrl: 'http://github.com/pr/1' }
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if prData.prUrl is invalid', async () => {
+      const res = await request(app).post('/api/email/pr-merged').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com',
+        userName: 'John',
+        prData: { prTitle: 'feat: auth', taskTitle: 'Auth module', taskId: 'T-5', prUrl: 'not-a-url' }
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/password-changed', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendPasswordChanged.mockResolvedValue({ success: true, messageId: 'msg-pc' });
+      const res = await request(app).post('/api/email/password-changed').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', changedAt: '2026-03-28T10:00:00Z', recoveryLink: 'http://app.com/recover'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if recoveryLink is invalid', async () => {
+      const res = await request(app).post('/api/email/password-changed').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', changedAt: '2026-03-28T10:00:00Z', recoveryLink: 'not-a-url'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/account-deleted', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendAccountDeleted.mockResolvedValue({ success: true, messageId: 'msg-ad' });
+      const res = await request(app).post('/api/email/account-deleted').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', deletionDate: '2026-03-28'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if deletionDate is missing', async () => {
+      const res = await request(app).post('/api/email/account-deleted').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/trial-ending', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendTrialEnding.mockResolvedValue({ success: true, messageId: 'msg-te' });
+      const res = await request(app).post('/api/email/trial-ending').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', daysLeft: 3, upgradeLink: 'http://app.com/upgrade'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if daysLeft is not an integer', async () => {
+      const res = await request(app).post('/api/email/trial-ending').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', daysLeft: 'soon', upgradeLink: 'http://app.com/upgrade'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/subscription-cancelled', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendSubscriptionCancelled.mockResolvedValue({ success: true, messageId: 'msg-sc' });
+      const res = await request(app).post('/api/email/subscription-cancelled').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', planName: 'Pro', accessUntil: '2026-04-30'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if accessUntil is missing', async () => {
+      const res = await request(app).post('/api/email/subscription-cancelled').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', planName: 'Pro'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/subscription-renewed', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendSubscriptionRenewed.mockResolvedValue({ success: true, messageId: 'msg-sr' });
+      const res = await request(app).post('/api/email/subscription-renewed').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', planName: 'Pro', amount: '$49', nextBillingDate: '2026-04-28'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if nextBillingDate is missing', async () => {
+      const res = await request(app).post('/api/email/subscription-renewed').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', planName: 'Pro', amount: '$49'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/inactivity-nudge', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendInactivityNudge.mockResolvedValue({ success: true, messageId: 'msg-in' });
+      const res = await request(app).post('/api/email/inactivity-nudge').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', lastLoginDate: '2026-02-01', ctaLabel: 'Go back', ctaLink: 'http://app.com'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if lastLoginDate is missing', async () => {
+      const res = await request(app).post('/api/email/inactivity-nudge').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', ctaLabel: 'Go back', ctaLink: 'http://app.com'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/digest', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendDigestEmail.mockResolvedValue({ success: true, messageId: 'msg-dg' });
+      const res = await request(app).post('/api/email/digest').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', periodLabel: 'This week', items: [{ title: 'Task done' }]
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if items is empty', async () => {
+      const res = await request(app).post('/api/email/digest').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', periodLabel: 'This week', items: []
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
+  describe('POST /api/email/maintenance-scheduled', () => {
+    it('should return 202 on success', async () => {
+      mailerService.sendMaintenanceScheduled.mockResolvedValue({ success: true, messageId: 'msg-ms' });
+      const res = await request(app).post('/api/email/maintenance-scheduled').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', startTime: '2026-04-01T02:00:00Z', estimatedDuration: '2 hours'
+      });
+      expect(res.status).toBe(202);
+    });
+
+    it('should return 400 if estimatedDuration is missing', async () => {
+      const res = await request(app).post('/api/email/maintenance-scheduled').set('X-Api-Key', API_KEY).send({
+        email: 'user@example.com', userName: 'John', startTime: '2026-04-01T02:00:00Z'
+      });
+      expect(res.status).toBe(400);
+    });
+  });
+
   describe('Global Error Handling', () => {
     it('should return 500 if service fails', async () => {
       mailerService.sendPasswordRecoveryEmail.mockRejectedValue(new Error('SMTP Down'));
