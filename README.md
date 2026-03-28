@@ -1,4 +1,8 @@
-# Kairo Email Service
+# Letterbox Email Service
+
+![Node Version](https://img.shields.io/badge/node-%3E%3D18-green)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Status](https://img.shields.io/badge/status-beta-orange)
 
 A robust, high-performance email delivery microservice built with **Node.js**, **Express**, and **Nodemailer**. Designed for seamless integration, security, and scalability.
 
@@ -39,8 +43,8 @@ A robust, high-performance email delivery microservice built with **Node.js**, *
 
 ### Clone and Install
 ```bash
-git clone https://github.com/Keiver-Dev/kairo-mail-service.git
-cd kairo-mail-service
+git clone https://github.com/Keiver-Dev/letterbox-mail-service.git
+cd letterbox-mail-service
 npm install
 ```
 
@@ -58,7 +62,7 @@ This service uses PostgreSQL to store audit logs of sent emails.
 ### 2. Create Database
 Using `psql` or a tool like [pgAdmin](https://www.pgadmin.org/):
 ```sql
-CREATE DATABASE kairo_email;
+CREATE DATABASE letterbox_email;
 ```
 
 ### 3. Migrations
@@ -76,13 +80,15 @@ PORT=3001
 NODE_ENV=development
 
 # Security
+# Generate a secure 32-character key with: 
+# node -e "console.log(require('crypto').randomBytes(16).toString('hex'))"
 INTERNAL_API_KEY=your_secure_32_char_key
 
 # Database
 DB_HOST=localhost
 DB_PORT=5432
-DB_NAME=kairo_email
-DB_USER=postgres
+DB_NAME=letterbox_email
+DB_USER=postgres  # Default for most PostgreSQL installations
 DB_PASSWORD=your_password
 
 # ─── Email ───────────────────────────────────────
@@ -93,6 +99,10 @@ EMAIL_USER=your_email@gmail.com
 EMAIL_PASS=your_gmail_app_password
 EMAIL_FROM_NAME=Mail Service
 
+# ─── Environment ──────────────────────────────────
+# Values: development, production, test
+NODE_ENV=development
+
 # ─── Frontend ────────────────────────────────────
 # Base URL to build links inside emails
 FRONTEND_URL=http://localhost:3000
@@ -102,7 +112,7 @@ FRONTEND_URL=http://localhost:3000
 To use Gmail as your provider:
 1. Enable **2FA** on your Google Account.
 2. Go to [App Passwords](https://myaccount.google.com/apppasswords).
-3. Create a new app password (e.g., "Kairo Email").
+3. Create a new app password (e.g., "Letterbox Email").
 4. Copy the 16-character code and use it as `EMAIL_PASS`.
 
 ### Alternative Providers
@@ -128,6 +138,15 @@ docker-compose logs -f mail-service
 ```
 
 The service will be accessible at `http://localhost:3001`.
+
+#### Docker Compose Overview
+The `docker-compose.yml` file includes:
+- **mail-service**: The Node.js microservice.
+- **db**: A PostgreSQL 15 instance.
+- **Volumes**: Persistent storage for the database in `postgres_data`.
+
+> [!TIP]
+> You can customize the ports and credentials directly in the `docker-compose.yml` or via environment variables.
 
 ---
 
@@ -163,7 +182,20 @@ npm start
 | `POST` | `/api/email/task-assignment` | Notify task assignments |
 | `POST` | `/api/email/mention` | Notify user mentions |
 
-*For full details on payloads, see the [Endpiont Documentation](./docs/ENDPOINTS.md).*
+### Quick Example (Verification Code)
+
+```bash
+curl -X POST http://localhost:3001/api/email/verify-email \
+  -H "Content-Type: application/json" \
+  -H "X-Api-Key: your_secure_32_char_key" \
+  -d '{
+    "to": "user@example.com",
+    "code": "123456",
+    "userName": "Keiver"
+  }'
+```
+
+*For full details on payloads, see the [Endpoint Documentation](./docs/ENDPOINTS.md).*
 
 ---
 

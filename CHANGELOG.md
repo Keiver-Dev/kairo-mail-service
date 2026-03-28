@@ -1,12 +1,12 @@
 # Changelog
 
-All notable changes to the **Kairo Email Service** will be documented in this file.
+All notable changes to the **Letterbox Email Service** will be documented in this file.
 
 ---
 
 ## [0.1.3-beta] - 2026-03-07
 ### Changed
-- **Branding Update**: Migrated project branding from "Kairo Studios" to **Keiver-Dev**.
+- **Branding Update**: Migrated project branding from "Letterbox" to **Keiver-Dev**.
 - **Email Design Revamp**: Completely redesigned all email templates with a premium "Glassmorphism" aesthetic.
     - Implemented `Inter` typography via Google Fonts.
     - Added linear gradients to headers and subtle shadows/borders to the main container.

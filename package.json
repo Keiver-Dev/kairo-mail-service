@@ -1,5 +1,5 @@
 {
-  "name": "kairo-email-service",
+  "name": "letterbox-email-service",
   "version": "0.1.3-beta",
   "description": "Email delivery microservice built with Node.js, Express, and Nodemailer.",
   "type": "module",
